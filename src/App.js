@@ -48,7 +48,7 @@ const App = () => {
         {posts.length > 0 &&
           posts
           .sort((a,b) => b.date - a.date)
-          .map((post) => <Post post={post} key={post.id} use={user} />)}
+          .map((post) => <Post post={post} key={post.id} user={user} />)}
       </div>
     </div>
   );
