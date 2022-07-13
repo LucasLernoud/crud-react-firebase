@@ -16,7 +16,7 @@ const Post = ({ post, user }) => {
     } else if (days === 1) {
       return "il y a 1 jour";
     } else {
-      return "il y a" + days + "jours";
+      return "il y a " + days + " jours";
     }
   };
 
