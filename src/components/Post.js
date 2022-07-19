@@ -1,6 +1,5 @@
 import { doc, updateDoc } from "firebase/firestore";
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { db } from "../utils/firebase.config";
 import CommentPost from "./CommentPost";
 import Delete from "./Delete";
@@ -11,6 +10,7 @@ const Post = ({ post, user }) => {
 
   const dateFormater = (date) => {
     let days = Math.floor((new Date() - new Date(date)) / (1000 * 3600 * 24));
+
     if (days === 0) {
       return "aujourd'hui";
     } else if (days === 1) {
@@ -22,10 +22,12 @@ const Post = ({ post, user }) => {
 
   const handleEdit = () => {
     setEdit(false);
+
     if (editMess) {
       updateDoc(doc(db, "posts", post.id), { message: editMess });
     }
   };
+
   return (
     <div className="post">
       <div className="post-header">
@@ -41,7 +43,7 @@ const Post = ({ post, user }) => {
             <span onClick={() => setEdit(!edit)}>
               <i className="fa-solid fa-pen-to-square"></i>
             </span>
-            <Delete postId={post.id}/>
+            <Delete postId={post.id} />
           </div>
         )}
       </div>
@@ -59,7 +61,7 @@ const Post = ({ post, user }) => {
       ) : (
         <p>{editMess ? editMess : post.message}</p>
       )}
-      <CommentPost post={post}/>
+      <CommentPost post={post} />
     </div>
   );
 };

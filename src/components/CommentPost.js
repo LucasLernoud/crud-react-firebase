@@ -1,14 +1,15 @@
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, updateDoc } from "firebase/firestore";
-import React from "react";
-import { useState } from "react";
-import { useRef } from "react";
+import React, { useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import { addComment } from "../feature/post.slice";
 import { auth, db } from "../utils/firebase.config";
 import CommentCard from "./CommentCard";
 
 const CommentPost = ({ post }) => {
   const [user, setUser] = useState(null);
   const answerContent = useRef();
+  const dispatch = useDispatch();
 
   onAuthStateChanged(auth, (currentUser) => {
     setUser(currentUser);
@@ -36,8 +37,10 @@ const CommentPost = ({ post }) => {
       ];
     }
 
-    updateDoc(doc(db, "posts", post.id), { comments: data });
-    answerContent.current.value = "";
+    updateDoc(doc(db, "posts", post.id), { comments: data }).then(() => {
+      dispatch(addComment([post.id, data]));
+      answerContent.current.value = "";
+    });
   };
 
   return (
@@ -51,13 +54,13 @@ const CommentPost = ({ post }) => {
       {user ? (
         <form onSubmit={(e) => handleComment(e)}>
           <textarea
-            placeholder="Envoyer un commentaire "
+            placeholder="Envoyer un commentaire"
             ref={answerContent}
           ></textarea>
           <input type="submit" value="Envoyer" />
         </form>
       ) : (
-        <p>Vous devez être connecté pour envoyer un commentaire</p>
+        <p>Vous devez être connecté pour poster un commentaire</p>
       )}
     </div>
   );

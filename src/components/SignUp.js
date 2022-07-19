@@ -1,5 +1,4 @@
-import React from "react";
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { auth } from "../utils/firebase.config";
 
 const SignUp = () => {
@@ -48,10 +47,10 @@ const SignUp = () => {
           <input
             type="password"
             placeholder="Mot de passe"
-            required
             ref={registerPassword}
+            required
           />
-          <input type="submit" value="Valider l'inscription" />
+          <input type="submit" value="Valider inscription" />
         </form>
       </div>
     </div>
